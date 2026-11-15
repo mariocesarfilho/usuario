@@ -1,4 +1,4 @@
-package com.mariocesar.usuario.entity;
+package com.mariocesar.usuario.controller.dto;
 
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
