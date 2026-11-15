@@ -1,16 +1,16 @@
 package com.mariocesar.usuario.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "usuario")
 public class Usuario {
 
@@ -22,4 +22,6 @@ public class Usuario {
     @Column(length = 100)
     private String email;
     private String senha;
+    private List<Endereco> enderecos;
+    private List<Telefone> telefones;
 }
