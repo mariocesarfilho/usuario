@@ -1,4 +1,4 @@
-package com.mariocesar.usuario.entity;
+package com.mariocesar.usuario.infraestructure.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +22,10 @@ public class Usuario {
     @Column(length = 100)
     private String email;
     private String senha;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private List<Endereco> enderecos;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private List<Telefone> telefones;
 }

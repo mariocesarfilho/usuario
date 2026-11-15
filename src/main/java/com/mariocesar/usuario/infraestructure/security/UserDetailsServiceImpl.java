@@ -1,8 +1,8 @@
 package com.mariocesar.usuario.infraestructure.security;
 
 
-import com.mariocesar.usuario.entity.Usuario;
-import com.mariocesar.usuario.repository.UsuarioRepository;
+import com.mariocesar.usuario.infraestructure.entity.Usuario;
+import com.mariocesar.usuario.infraestructure.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

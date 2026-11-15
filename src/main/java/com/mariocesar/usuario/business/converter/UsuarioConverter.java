@@ -3,12 +3,11 @@ package com.mariocesar.usuario.business.converter;
 import com.mariocesar.usuario.business.dto.EnderecoDTO;
 import com.mariocesar.usuario.business.dto.TelefoneDTO;
 import com.mariocesar.usuario.business.dto.UsuarioDTO;
-import com.mariocesar.usuario.entity.Endereco;
-import com.mariocesar.usuario.entity.Telefone;
-import com.mariocesar.usuario.entity.Usuario;
+import com.mariocesar.usuario.infraestructure.entity.Endereco;
+import com.mariocesar.usuario.infraestructure.entity.Telefone;
+import com.mariocesar.usuario.infraestructure.entity.Usuario;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
