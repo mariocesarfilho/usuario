@@ -48,7 +48,7 @@ public class UsuarioService {
         return usuarioRepository.existsByEmail(email);
     }
 
-    public UsuarioDTO buscaPorEmail(String email) {
+    public Usuario buscaPorEmail(String email) {
         try {
             if (!verificaEmailExistente(email)) {
                 throw new ResourceNotFoundException("Erro, email não cadastrado!" + email);
@@ -58,5 +58,16 @@ public class UsuarioService {
         } catch (ResourceNotFoundException e) {
             throw new ResourceNotFoundException("E-mail não encontrado: " + e.getCause());
         }
+    }
+
+    public void deletaUsuarioPorEmail(String email) {
+            if (!verificaEmailExistente(email)) {
+                throw new ResourceNotFoundException("Erro, email não encontrado! " + email);
+            }
+            usuarioRepository.deleteUserByEmail(email);
+    }
+
+    public List<Usuario> buscarTodosUsuarios() {
+        return usuarioRepository.findAll();
     }
 }
