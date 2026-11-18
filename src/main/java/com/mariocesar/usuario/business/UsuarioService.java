@@ -6,6 +6,7 @@ import com.mariocesar.usuario.infraestructure.entity.Usuario;
 import com.mariocesar.usuario.infraestructure.exception.ConflictException;
 import com.mariocesar.usuario.infraestructure.exception.ResourceNotFoundException;
 import com.mariocesar.usuario.infraestructure.repository.UsuarioRepository;
+import com.mariocesar.usuario.infraestructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,7 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioConverter usuarioConverter;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
 //    Primeiro precisa converter para Usuário normal, salvar,
 //    Depois converter novamente para DTO para devolver para o usuário final.
@@ -69,5 +71,23 @@ public class UsuarioService {
 
     public List<Usuario> buscarTodosUsuarios() {
         return usuarioRepository.findAll();
+    }
+
+    public UsuarioDTO updateUsuario(String token, UsuarioDTO usuarioDTO) {
+//      Pegar o email do token
+        String email = jwtUtil.extractUsername(token.substring(7));
+
+//       Depois verificamos se o e-mail existe.
+        Usuario usuarioEntity = usuarioRepository.findByEmail(email).orElseThrow(() ->
+                new ResourceNotFoundException("Erro, email não encontrado: " + email));
+
+        usuarioEntity.setSenha(usuarioEntity.getSenha() != null ? passwordEncoder.encode(usuarioDTO.getSenha()) : null);
+
+//       Agora estamos pegando as informações que o usuário passou para a api,
+//       se o usuário não passou uma informação em específico, a api pega as informações
+//       do banco de dados, para não salvar null. Pois estamos utilizando o método Put
+        Usuario usuario = usuarioConverter.updateUser(usuarioDTO, usuarioEntity);
+
+        return usuarioConverter.paraUsuarioDTO(usuarioRepository.save(usuario));
     }
 }

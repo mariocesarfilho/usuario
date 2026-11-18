@@ -34,7 +34,7 @@ public class UsuarioController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(usuarioDTO.getEmail(), usuarioDTO.getSenha())
         );
-        return ResponseEntity.ok("Bearer" + jwtUtil.generateToken(authentication.getName()));
+        return ResponseEntity.ok("Bearer " + jwtUtil.generateToken(authentication.getName()));
     }
 
     @DeleteMapping("/{email}")
@@ -51,5 +51,10 @@ public class UsuarioController {
     @GetMapping
     public ResponseEntity<List<Usuario>> buscarUsuarios() {
         return ResponseEntity.ok(usuarioService.buscarTodosUsuarios());
+    }
+
+    @PutMapping
+    public ResponseEntity<UsuarioDTO> atualizarUsuario(@RequestHeader("Authorization") String token, @RequestBody UsuarioDTO usuarioDTO) {
+        return ResponseEntity.ok(usuarioService.updateUsuario(token ,usuarioDTO));
     }
 }
