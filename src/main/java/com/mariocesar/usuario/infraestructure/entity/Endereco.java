@@ -1,4 +1,4 @@
-package com.mariocesar.usuario.entity;
+package com.mariocesar.usuario.infraestructure.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
