@@ -66,7 +66,7 @@ public class UsuarioService {
             if (!verificaEmailExistente(email)) {
                 throw new ResourceNotFoundException("Erro, email não encontrado! " + email);
             }
-            usuarioRepository.deleteUserByEmail(email);
+            usuarioRepository.deleteByEmail(email);
     }
 
     public List<Usuario> buscarTodosUsuarios() {
