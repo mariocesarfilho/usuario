@@ -9,6 +9,7 @@ import com.mariocesar.usuario.infraestructure.entity.Usuario;
 import com.mariocesar.usuario.infraestructure.security.JwtUtil;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -63,5 +64,15 @@ public class UsuarioController {
     @PutMapping("/telefone")
     public ResponseEntity<TelefoneDTO> atualizarTelefone(@RequestParam("id") Long id, @RequestBody TelefoneDTO telefoneDTO) {
         return ResponseEntity.ok(usuarioService.updateTelefone(id, telefoneDTO));
+    }
+
+    @PostMapping("/endereco")
+    public ResponseEntity<EnderecoDTO> cadastraEndereco(@RequestHeader("Authorization") String token, @RequestBody EnderecoDTO enderecoDTO) {
+        return ResponseEntity.ok(usuarioService.cadastraEndereco(token, enderecoDTO));
+    }
+
+    @PostMapping("/telefone")
+    public ResponseEntity<TelefoneDTO> cadastraTelefone(@RequestHeader("Authorization") String token, @RequestBody TelefoneDTO telefoneDTO) {
+        return ResponseEntity.ok(usuarioService.cadastraTelefone(token, telefoneDTO));
     }
 }
