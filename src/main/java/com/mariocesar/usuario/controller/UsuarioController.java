@@ -1,7 +1,10 @@
 package com.mariocesar.usuario.controller;
 
 import com.mariocesar.usuario.business.UsuarioService;
+import com.mariocesar.usuario.business.dto.EnderecoDTO;
+import com.mariocesar.usuario.business.dto.TelefoneDTO;
 import com.mariocesar.usuario.business.dto.UsuarioDTO;
+import com.mariocesar.usuario.infraestructure.entity.Endereco;
 import com.mariocesar.usuario.infraestructure.entity.Usuario;
 import com.mariocesar.usuario.infraestructure.security.JwtUtil;
 import jakarta.websocket.server.PathParam;
@@ -38,23 +41,27 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{email}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deletaUsuarioPorEmail(@PathVariable String email) {
         usuarioService.deletaUsuarioPorEmail(email);
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<Usuario> buscarPorEmail(@PathVariable String email) {
-        return ResponseEntity.ok(usuarioService.buscaPorEmail(email));
-    }
-
     @GetMapping
-    public ResponseEntity<List<Usuario>> buscarUsuarios() {
-        return ResponseEntity.ok(usuarioService.buscarTodosUsuarios());
+    public ResponseEntity<UsuarioDTO> buscarPorEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok(usuarioService.buscaPorEmail(email));
     }
 
     @PutMapping
     public ResponseEntity<UsuarioDTO> atualizarUsuario(@RequestHeader("Authorization") String token, @RequestBody UsuarioDTO usuarioDTO) {
         return ResponseEntity.ok(usuarioService.updateUsuario(token ,usuarioDTO));
+    }
+
+    @PutMapping("/endereco")
+    public ResponseEntity<EnderecoDTO> atualizarEndereco(@RequestParam("id") Long id, @RequestBody EnderecoDTO enderecoDTO) {
+        return ResponseEntity.ok(usuarioService.updateEndereco(id, enderecoDTO));
+    }
+
+    @PutMapping("/telefone")
+    public ResponseEntity<TelefoneDTO> atualizarTelefone(@RequestParam("id") Long id, @RequestBody TelefoneDTO telefoneDTO) {
+        return ResponseEntity.ok(usuarioService.updateTelefone(id, telefoneDTO));
     }
 }

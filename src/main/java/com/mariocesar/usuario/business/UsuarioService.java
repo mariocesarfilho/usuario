@@ -56,13 +56,14 @@ public class UsuarioService {
         return usuarioRepository.existsByEmail(email);
     }
 
-    public Usuario buscaPorEmail(String email) {
+    public UsuarioDTO buscaPorEmail(String email) {
         try {
             if (!verificaEmailExistente(email)) {
                 throw new ResourceNotFoundException("Erro, email não cadastrado!" + email);
             }
-            return usuarioRepository.findByEmail(email)
-                    .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado!"));
+           return usuarioConverter.paraUsuarioDTO(usuarioRepository.findByEmail(email).orElseThrow(
+                   () -> new ResourceNotFoundException("Erro, email não encontrado! " + email)
+           ));
         } catch (ResourceNotFoundException e) {
             throw new ResourceNotFoundException("E-mail não encontrado: " + e.getCause());
         }
